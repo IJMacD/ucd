@@ -1,18 +1,18 @@
 {
-  "name" : "ucd",
-  "version" : "0.2.0",
+  "name" : "ijmacd.ucd",
+  "version" : "0.12.1",
   "description" : "ucd - Unicode Character Database for JavaScript",
   "tags" : ["unicode", "ucd", "utility"],
-  "author" : "ynakajima <yuhta.nakajima@gmail.com>",
+  "author" : "ijmacd <ijmacd@gmail.com>",
   "repository" : {
     "type" : "git",
-    "url" : "https://github.com/ynakajima/ucd.git"
+    "url" : "https://github.com/ijmacd/ucd.git"
   },
-  "bugs" : { "web" : "https://github.com/ynakajima/ucd/issues" },
+  "bugs" : { "web" : "https://github.com/ijmacd/ucd/issues" },
   "licenses" : [ 
     { 
       "type" : "MIT",
-      "url" : "http://github.com/ynakajima/ucd/raw/master/MIT-LICENSE.txt"
+      "url" : "http://github.com/ijmacd/ucd/raw/master/MIT-LICENSE.txt"
     }
   ],
   "main" : "./src/UCD.js"
