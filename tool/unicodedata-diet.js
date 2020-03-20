@@ -30,15 +30,27 @@
 
 // require
 var fs = require('fs'),
-    util = require('util');
+    util = require('util'),
+    path = require('path');
 
-fs.readFile(process.argv[2], 'utf-8', function(err, data) {
+var filename;
+var version;
+
+if (process.argv.length > 3) {
+  filename = process.argv[2];
+  version = process.argv[3];
+} else {
+  version = process.argv[2];
+  filename = path.join(__dirname, "../unicode", version, "ucd/UnicodeData.txt");
+}
+
+fs.readFile(filename, 'utf-8', function(err, data) {
 
   // UnicodeData
   var UnicodeData = {};
 
   // Unicode version
-  UnicodeData.unicodeVersion = process.argv[3];
+  UnicodeData.unicodeVersion = version;
   
   // characterNameList
   UnicodeData.characterNameList = [];
@@ -71,12 +83,16 @@ fs.readFile(process.argv[2], 'utf-8', function(err, data) {
   // ダイエットされたコードを出力
   var resultCode = util.format(
     'var UnicodeData = %s;',
-    JSON.stringify(UnicodeData, ',', ' ')
+    JSON.stringify(UnicodeData, null, ' ')
   );
 
-  console.log('/* Unicode Character Database v.' + UnicodeData.unicodeVersion + ' */');
-  console.log(fs.readFileSync('snippet/header.js', 'utf-8').toString());
-  console.log(resultCode);
-  console.log(fs.readFileSync('snippet/footer.js', 'utf-8').toString());
+  var file = fs.openSync(path.join(__dirname, "../data/unicodedata.js"), "w");
+
+  fs.writeSync(file, '/* Unicode Character Database v.' + UnicodeData.unicodeVersion + ' */\n');
+  fs.writeSync(file, fs.readFileSync(path.join(__dirname, 'snippet/header.js'), 'utf-8').toString());
+  fs.writeSync(file, resultCode);
+  fs.writeSync(file, fs.readFileSync(path.join(__dirname, 'snippet/footer.js'), 'utf-8').toString());
+
+  fs.closeSync(file);
 
 });
